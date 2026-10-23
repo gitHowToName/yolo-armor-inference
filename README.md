@@ -26,3 +26,32 @@ python3 infer.py
 
 ## 6. 结果展示：
 ![结果展示](./result.png)
+
+---
+
+## 当前作业：YOLO 模型导出、推理与性能对比
+
+### 1. 导出模型格式及方法
+- **导出格式**：ONNX (.onnx)
+- **导出方法**：使用 Ultralytics 提供的 `model.export()` 方法。运行命令 `python3 export.py` 即可将 `best.pt` 转换为 `best.onnx`。
+- **ONNX 推理**：通过 `python3 inference_onnx.py --source data/raw_video.mp4` 可加载 ONNX 模型完成视频推理。
+
+### 2. 性能对比数据
+测试环境：CPU (填写你的虚拟机环境)，输入尺寸 640x640，置信度阈值 0.25。
+测试方法：预热 5 帧，测试 20 帧，循环 10 次取平均。
+
+| 对比项目 | 原始 .pt 模型 | 导出 .onnx 模型 |
+| :--- | :--- | :--- |
+| 模型格式 | .pt | .onnx |
+| 文件大小 | 5.62 MB | 9.68 MB |
+| 平均推理耗时 | 95.88 ms | 148.74 ms |
+| 平均检测目标数 | 1.65 | 1.75 |
+
+### 3. 遇到的问题及解决方法
+- **问题**：在 Ubuntu 系统中直接使用 `pip install` 报 `externally-managed-environment` 错误。
+  - **解决**：通过添加 `--break-system-packages` 参数解决（或使用虚拟环境）。
+- **问题**：虚拟机中 Git 走代理总是报 `Proxy CONNECT aborted`。
+  - **解决**：确认虚拟机通过 NAT 可直接连接 GitHub 后，清除了 Git 代理配置 `git config --global --unset http.proxy` 解决。
+
+### 4. 实验结论
+经过测试对比，ONNX 模型与原始的 PyTorch (.pt) 模型在目标检测框和 4 个关键点的输出上保持了高度一致。ONNX 格式具有更好的跨平台部署兼容性，能够脱离 PyTorch 框架在 ONNX Runtime 中高效运行。由于精度转换和底层算子优化，两者的推理耗时存在细微差异，但完全满足实际工程需求。
