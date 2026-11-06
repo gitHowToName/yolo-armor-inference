@@ -45,7 +45,7 @@ python3 infer.py
 python3.11 -m venv yolo-armor-env
 source yolo-armor-env/bin/activate
 pip install -r requirements.txt
----
+```
 
 ## 当前作业：YOLO 模型导出、推理与性能对比
 
