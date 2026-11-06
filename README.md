@@ -27,6 +27,24 @@ python3 infer.py
 ## 6. 结果展示：
 ![结果展示](./result.png)
 
+
+----------------------------
+
+# 工业相机装甲板实时识别
+
+## 1. 实验环境
+- **操作系统**：Ubuntu 26.04 LTS (VMware 虚拟机)
+- **相机型号**：Hikrobot MV-CA016-10UC (序列号: 00L28498186)
+- **Python版本**：3.11
+- **主要依赖**：Ultralytics, OpenCV, PyTorch (CPU版)
+- **模型权重**：YOLO26n 装甲板四关键点模型 (`best.pt`)
+
+## 2. 运行方法
+### 依赖安装
+```bash
+python3.11 -m venv yolo-armor-env
+source yolo-armor-env/bin/activate
+pip install -r requirements.txt
 ---
 
 ## 当前作业：YOLO 模型导出、推理与性能对比
